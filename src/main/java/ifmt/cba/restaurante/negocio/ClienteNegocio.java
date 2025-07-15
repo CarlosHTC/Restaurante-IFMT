@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ifmt.cba.restaurante.dto.ClienteDTO;
+import ifmt.cba.restaurante.entity.Bairro;
 import ifmt.cba.restaurante.entity.Cliente;
 import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
+import ifmt.cba.restaurante.repository.BairroRepository;
 import ifmt.cba.restaurante.repository.ClienteRepository;
 
 @Service
@@ -20,29 +22,47 @@ public class ClienteNegocio {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private BairroRepository bairroRepository;
 
     public ClienteNegocio() {
         this.modelMapper = new ModelMapper();
     }
 
     public ClienteDTO inserir(ClienteDTO clienteDTO) throws NotValidDataException {
-
         Cliente cliente = this.toEntity(clienteDTO);
-        String mensagemErros = cliente.validar();
 
+        // Buscar o bairro pelo ID do DTO
+        Integer codigoBairro = clienteDTO.getBairro() != null ? clienteDTO.getBairro().getCodigo() : null;
+
+        if (codigoBairro == null) {
+            throw new NotValidDataException("Bairro não informado");
+        }
+
+        Bairro bairro = bairroRepository.findById(codigoBairro)
+            .orElseThrow(() -> new NotValidDataException("Bairro com código " + codigoBairro + " não encontrado"));
+
+        // Vincular o bairro ao cliente
+        cliente.setBairro(bairro);
+
+        // Validar cliente com bairro já atribuído
+        String mensagemErros = cliente.validar();
         if (!mensagemErros.isEmpty()) {
             throw new NotValidDataException(mensagemErros);
         }
 
-        try {
-            if (clienteRepository.findByCPF(cliente.getCPF()) != null) {
-                throw new NotValidDataException("Ja existe cliente com esse CPF");
-            }
+        // Verificar CPF já existente
+        if (clienteRepository.findByCpf(cliente.getCpf()) != null) {
+            throw new NotValidDataException("Já existe cliente com esse CPF");
+        }
 
+        try {
             cliente = clienteRepository.save(cliente);
         } catch (Exception ex) {
             throw new NotValidDataException("Erro ao incluir o cliente - " + ex.getMessage());
         }
+
         return this.toDTO(cliente);
     }
 
@@ -96,7 +116,7 @@ public class ClienteNegocio {
 
     public ClienteDTO pesquisaCPF(String cpf) throws NotFoundException {
         try {
-            return this.toDTO(clienteRepository.findByCPF(cpf));
+            return this.toDTO(clienteRepository.findByCpf(cpf));
         } catch (Exception ex) {
             throw new NotFoundException("Erro ao pesquisar cliente pelo CPF - " + ex.getMessage());
         }

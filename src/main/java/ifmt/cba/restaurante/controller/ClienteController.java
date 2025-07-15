@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,18 +32,18 @@ public class ClienteController {
         return clienteNegocio.pesquisaTodos();
     }
 
-    @GetMapping(value = "/codigo/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ClienteDTO buscarPorID(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/codigo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ClienteDTO buscarPorID(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return clienteNegocio.pesquisaCodigo(codigo);
     }
 
-    @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ClienteDTO buscarPorNome(@PathVariable("nome") String nome) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/nome", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ClienteDTO buscarPorNome(@RequestParam("nome") String nome) throws NotFoundException, NotValidDataException {
         return clienteNegocio.pesquisaNome(nome);
     }
 
-    @GetMapping(value = "/cpf/{cpf}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ClienteDTO buscarPorCPF(@PathVariable("cpf") String cpf) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/cpf", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ClienteDTO buscarPorCPF(@RequestParam("cpf") String cpf) throws NotFoundException, NotValidDataException {
         return clienteNegocio.pesquisaCPF(cpf);
     }
 
@@ -56,8 +57,8 @@ public class ClienteController {
         return clienteNegocio.alterar(clienteDTO);
     }
 
-    @DeleteMapping(value = "/{codigo}")
-    public ResponseEntity<?> excluir(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @DeleteMapping
+    public ResponseEntity<?> excluir(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         clienteNegocio.excluir(codigo);
         return ResponseEntity.noContent().build();
     }

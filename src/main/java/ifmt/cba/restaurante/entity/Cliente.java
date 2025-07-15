@@ -25,10 +25,10 @@ public class Cliente {
     private String nome;
 
     @Column(name = "rg", nullable = false)
-    private String RG;
+    private String rg;
 
     @Column(name = "cpf", nullable = false)
-    private String CPF;
+    private String cpf;
 
     @Column(name = "telefone", nullable = false)
     private String telefone;
@@ -62,20 +62,20 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getRG() {
-        return RG;
+    public String getRg() {
+        return rg;
     }
 
-    public void setRG(String rG) {
-        RG = rG;
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCPF(String cPF) {
-        CPF = cPF;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getLogradouro() {
@@ -144,38 +144,37 @@ public class Cliente {
         String retorno = "";
 
         if(this.nome == null || this.nome.length() < 3){
-            retorno += "Nome invalido";
+            retorno += "Nome invalido ";
         }
 
-        if(this.RG == null || this.RG.length() == 0){
-            retorno += "RG invalido";
+        if(this.rg == null || this.rg.length() == 0){
+            retorno += "rg invalido ";
         }
 
-        //falta validar CPF
-        if(this.CPF == null || this.CPF.length() < 11){
-            retorno += "CPF invalido";
+        if (this.cpf == null || this.cpf.replaceAll("[^\\d]", "").length() != 11) {
+            retorno += "cpf invalido ";
         }
 
         if(this.telefone == null || this.telefone.length() < 8){
-            retorno += "Telefone invalido";
+            retorno += "Telefone invalido ";
         }
 
         if(this.logradouro == null || this.logradouro.length() == 0){
-            retorno += "Logradouro invalido";
+            retorno += "Logradouro invalido ";
         }
      
         if(this.numero == null || this.numero.length() == 0){
-            retorno += "Numero invalido";
+            retorno += "Numero invalido ";
         }
 
         if(this.bairro == null){
-            retorno += "Bairro invalido";
+            retorno += "Bairro invalido ";
         }else{
             retorno += this.bairro.validar();
         }
         
         if(this.pontoReferencia == null){
-            retorno += "Ponto de referencia invalido";
+            retorno += "Ponto de referencia invalido ";
         }
    
         return retorno;

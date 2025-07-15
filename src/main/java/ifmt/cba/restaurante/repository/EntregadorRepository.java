@@ -8,6 +8,6 @@ public interface EntregadorRepository extends JpaRepository<Entregador, Integer>
 
     Entregador findByNomeIgnoreCaseStartingWith(String nome);
 
-    Entregador findByCPF(String cpf);
+    Entregador findByCpf(String cpf);
 
 }

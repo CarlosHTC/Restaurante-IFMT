@@ -22,10 +22,10 @@ public class Colaborador {
     private String nome;
 
     @Column(name = "rg")
-    private String RG;
+    private String rg;
 
     @Column(name = "cpf")
-    private String CPF;
+    private String cpf;
 
     @Column(name = "telefone")
     private String telefone;
@@ -47,19 +47,19 @@ public class Colaborador {
     }
 
     public String getRG() {
-        return RG;
+        return rg;
     }
 
-    public void setRG(String rG) {
-        RG = rG;
+    public void setRG(String rg) {
+        this.rg = rg;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCPF(String cPF) {
-        CPF = cPF;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getTelefone() {
@@ -101,16 +101,16 @@ public class Colaborador {
         String retorno = "";
 
         if(this.nome == null || this.nome.length() < 3){
-            retorno += "Nome invalido";
+            retorno += "Nome invalido ";
         }
 
-        if(this.RG == null || this.RG.length() == 0){
-            retorno += "RG invalido";
+        if(this.rg == null || this.rg.length() == 0){
+            retorno += "Rg invalido ";
         }
 
-        //falta validar CPF
-        if(this.CPF == null || this.CPF.length() < 11){
-            retorno += "CPF invalido";
+        //falta validar cpf
+        if(this.cpf == null || this.cpf.length() < 11){
+            retorno += "copf invalido ";
         }
 
         if(this.telefone == null || this.telefone.length() < 8){

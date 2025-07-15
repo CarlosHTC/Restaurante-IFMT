@@ -8,7 +8,7 @@ import ifmt.cba.restaurante.entity.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-    Cliente findByCPF(String cpf);
+    Cliente findByCpf(String cpf);
 
     Cliente findByNomeIgnoreCaseStartingWith(String nome);
 

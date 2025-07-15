@@ -8,6 +8,6 @@ public interface ColaboradorRepository extends JpaRepository<Colaborador, Intege
 
     Colaborador findByNomeIgnoreCaseStartingWith(String nome);
 
-    Colaborador findByCPF(String cpf);
+    Colaborador findByCpf(String cpf);
 
 }

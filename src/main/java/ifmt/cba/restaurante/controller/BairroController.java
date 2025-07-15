@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -41,15 +42,15 @@ public class BairroController {
         return listaBairroTempDTO;
     }
 
-    @GetMapping(value = "/codigo/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BairroDTO buscarPorID(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/codigo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public BairroDTO buscarPorID(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         BairroDTO bairroTempDTO = bairroNegocio.pesquisaCodigo(codigo);
         addHateoasLinksCRUD(bairroTempDTO);
         return bairroTempDTO;
     }
 
-    @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BairroDTO buscarPorNome(@PathVariable("nome") String nome) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/nome", produces = MediaType.APPLICATION_JSON_VALUE)
+    public BairroDTO buscarPorNome(@RequestParam("nome") String nome) throws NotFoundException, NotValidDataException {
         BairroDTO bairroTempDTO = bairroNegocio.pesquisaNome(nome);
         addHateoasLinksCRUD(bairroTempDTO);
         return bairroTempDTO;
@@ -71,8 +72,8 @@ public class BairroController {
         return bairroTempDTO;
     }
 
-    @DeleteMapping(value = "/{codigo}")
-    public ResponseEntity<?> excluirBairro(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @DeleteMapping
+    public ResponseEntity<?> excluirBairro(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         bairroNegocio.excluir(codigo);
         return ResponseEntity.noContent().build();
     }

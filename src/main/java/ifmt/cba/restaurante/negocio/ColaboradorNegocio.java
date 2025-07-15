@@ -30,7 +30,7 @@ public class ColaboradorNegocio {
 		}
 
 		try {
-			if (colaboradorRepository.findByCPF(colaborador.getCPF()) != null) {
+			if (colaboradorRepository.findByCpf(colaborador.getCpf()) != null) {
 				throw new NotValidDataException("Ja existe esse colaborador");
 			}
 			colaborador = colaboradorRepository.save(colaborador);

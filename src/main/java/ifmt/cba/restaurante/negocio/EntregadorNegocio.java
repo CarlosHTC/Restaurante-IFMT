@@ -33,7 +33,7 @@ public class EntregadorNegocio {
 		}
 
 		try {
-			if (entregadorRepository.findByCPF(entregador.getCPF()) != null) {
+			if (entregadorRepository.findByCpf(entregador.getCpf()) != null) {
 				throw new NotValidDataException("Ja existe esse entregador");
 			}
 			entregador = entregadorRepository.save(entregador);

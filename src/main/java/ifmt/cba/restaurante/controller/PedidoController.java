@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -32,19 +33,19 @@ public class PedidoController {
         return pedidoNegocio.pesquisaTodos();
     }
 
-    @GetMapping(value = "/codigo/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PedidoDTO buscarPorID(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/codigo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PedidoDTO buscarPorID(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.pesquisaCodigo(codigo);
     }
 
-    @GetMapping(value = "/estado/{estado}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PedidoDTO> buscarPorEstado(@PathVariable("estado") String estado) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/estado", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PedidoDTO> buscarPorEstado(@RequestParam("estado") String estado) throws NotFoundException, NotValidDataException {
         EstadoPedido estadoPedido = EstadoPedido.valueOf(estado.toUpperCase());
         return pedidoNegocio.pesquisaPorEstado(estadoPedido);
     }
 
-    @GetMapping(value = "/data/{data}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PedidoDTO> buscarPorData(@PathVariable("data") String data) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PedidoDTO> buscarPorData(@RequestParam("data") String data) throws NotFoundException, NotValidDataException {
         LocalDate localDate = LocalDate.parse(data);
         return pedidoNegocio.pesquisaPorData(localDate);
     }
@@ -54,7 +55,7 @@ public class PedidoController {
         return pedidoNegocio.inserir(pedidoDTO);
     }
 
-    @PutMapping(value = "/{codigo}/iniciar-producao", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{codigo}/iniciar-producao", produces = MediaType.APPLICATION_JSON_VALUE)
     public PedidoDTO iniciarProducao(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.iniciarProducao(codigo);
     }

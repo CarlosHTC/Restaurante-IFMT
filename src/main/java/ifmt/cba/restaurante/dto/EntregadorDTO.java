@@ -18,8 +18,8 @@ public class EntregadorDTO {
 
     private int codigo;
     private String nome;
-    private String RG;
-    private String CPF;
+    private String rg;
+    private String cpf;
     private String telefone;
 
     @Override
