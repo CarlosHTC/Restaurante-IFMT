@@ -51,7 +51,7 @@ public class Entregador {
     }
 
     public void setRg(String rg) {
-        rg = rg;
+        this.rg = rg;
     }
 
     public String getCpf() {

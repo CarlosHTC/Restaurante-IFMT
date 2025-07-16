@@ -20,7 +20,31 @@ public class ItemPedidoDTO {
     private PreparoProdutoDTO preparoProduto;
     private int quantidadePorcao;
 
-    @Override
+    public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public PreparoProdutoDTO getPreparoProduto() {
+		return preparoProduto;
+	}
+
+	public void setPreparoProduto(PreparoProdutoDTO preparoProduto) {
+		this.preparoProduto = preparoProduto;
+	}
+
+	public int getQuantidadePorcao() {
+		return quantidadePorcao;
+	}
+
+	public void setQuantidadePorcao(int quantidadePorcao) {
+		this.quantidadePorcao = quantidadePorcao;
+	}
+
+	@Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }

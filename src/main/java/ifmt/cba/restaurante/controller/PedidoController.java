@@ -65,28 +65,28 @@ public class PedidoController {
         return pedidoNegocio.inserir(pedidoDTO);
     }
 
-    @PutMapping(path = "/{codigo}/iniciar-producao", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PedidoDTO iniciarProducao(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @PutMapping(path = "/iniciarProducao", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PedidoDTO iniciarProducao(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.iniciarProducao(codigo);
     }
 
-    @PutMapping(value = "/{codigo}/finalizar-producao", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PedidoDTO finalizarProducao(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @PutMapping(path = "/finalizarProducao", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PedidoDTO finalizarProducao(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.finalizarProducao(codigo);
     }
 
-    @PutMapping(value = "/{codigo}/iniciar-entrega/{entregador}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PedidoDTO iniciarEntrega(@PathVariable("codigo") int codigo, @PathVariable("entregador") int codigoEntregador) throws NotFoundException, NotValidDataException {
+    @PutMapping(path = "/iniciarEntrega", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PedidoDTO iniciarEntrega(@RequestParam("codigo") int codigo, @RequestParam("entregador") int codigoEntregador) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.iniciarEntrega(codigo, codigoEntregador);
     }
 
-    @PutMapping(value = "/{codigo}/finalizar-entrega", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PedidoDTO finalizarEntrega(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @PutMapping(path = "/finalizarEntrega", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PedidoDTO finalizarEntrega(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.finalizarEntrega(codigo);
     }
 
-    @PutMapping(value = "/{codigo}/cancelar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PedidoDTO cancelarPedido(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @PutMapping(path = "/cancelar", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PedidoDTO cancelarPedido(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return pedidoNegocio.cancelarPedido(codigo);
     }
 }

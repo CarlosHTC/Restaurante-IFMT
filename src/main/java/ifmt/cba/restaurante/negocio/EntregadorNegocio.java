@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ifmt.cba.restaurante.dto.EntregadorDTO;
 import ifmt.cba.restaurante.entity.Entregador;
@@ -12,106 +13,107 @@ import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
 import ifmt.cba.restaurante.repository.EntregadorRepository;
 
+@Service
 public class EntregadorNegocio {
 
-    private ModelMapper modelMapper;
+	 private ModelMapper modelMapper;
 
-	@Autowired
-	private EntregadorRepository entregadorRepository;
+	    @Autowired
+	    private EntregadorRepository entregadorRepository;
 
-	public EntregadorNegocio() {
-		this.modelMapper = new ModelMapper();
-	}
+	    public EntregadorNegocio() {
+	        this.modelMapper = new ModelMapper();
+	    }
 
-	public EntregadorDTO inserir(EntregadorDTO entregadorDTO) throws NotValidDataException, NotFoundException {
+	    public EntregadorDTO inserir(EntregadorDTO entregadorDTO) throws NotValidDataException {
+	        Entregador entregador = this.toEntity(entregadorDTO);
 
-		Entregador entregador = this.toEntity(entregadorDTO);
-		String mensagemErros = entregador.validar();
+	        String mensagemErros = entregador.validar();
+	        if (!mensagemErros.isEmpty()) {
+	            throw new NotValidDataException(mensagemErros);
+	        }
 
-		if (!mensagemErros.isEmpty()) {
-			throw new NotValidDataException(mensagemErros);
-		}
+	        if (entregadorRepository.findByCpf(entregador.getCpf()) != null) {
+	            throw new NotValidDataException("Já existe esse entregador");
+	        }
 
-		try {
-			if (entregadorRepository.findByCpf(entregador.getCpf()) != null) {
-				throw new NotValidDataException("Ja existe esse entregador");
-			}
-			entregador = entregadorRepository.save(entregador);
-		} catch (Exception ex) {
-			throw new NotValidDataException("Erro ao incluir o entregador - " + ex.getMessage());
-		}
-		return this.toDTO(entregador);
-	}
+	        try {
+	            entregador = entregadorRepository.save(entregador);
+	        } catch (Exception ex) {
+	            throw new NotValidDataException("Erro ao incluir o entregador - " + ex.getMessage());
+	        }
 
-	public EntregadorDTO alterar(EntregadorDTO entregadorDTO) throws NotValidDataException, NotFoundException {
+	        return this.toDTO(entregador);
+	    }
 
-		Entregador entregador = this.toEntity(entregadorDTO);
-		String mensagemErros = entregador.validar();
-		if (!mensagemErros.isEmpty()) {
-			throw new NotValidDataException(mensagemErros);
-		}
-		try {
-			if (entregadorRepository.findById(entregador.getCodigo()) == null) {
-				throw new NotFoundException("Nao existe esse entregador");
-			}
-			entregador = entregadorRepository.save(entregador);
-		} catch (Exception ex) {
-			throw new NotValidDataException("Erro ao alterar o entregador - " + ex.getMessage());
-		}
-		return this.toDTO(entregador);
-	}
+	    public EntregadorDTO alterar(EntregadorDTO entregadorDTO) throws NotValidDataException, NotFoundException {
+	        Entregador entregador = this.toEntity(entregadorDTO);
 
-	public void excluir(int codigo) throws NotValidDataException, NotFoundException {
+	        String mensagemErros = entregador.validar();
+	        if (!mensagemErros.isEmpty()) {
+	            throw new NotValidDataException(mensagemErros);
+	        }
 
-		try {
-			Entregador entregador = entregadorRepository.findById(codigo).get();
-			if ( entregador == null) {
-				throw new NotFoundException("Nao existe esse entregador");
-			}
-			entregadorRepository.delete(entregador);
-		} catch (Exception ex) {
-			throw new NotValidDataException("Erro ao excluir o entregador - " + ex.getMessage());
-		}
-	}
+	        if (!entregadorRepository.findById(entregador.getCodigo()).isPresent()) {
+	            throw new NotFoundException("Não existe esse entregador");
+	        }
 
-	public List<EntregadorDTO> pesquisaTodos() throws NotFoundException {
-		try {
-			return this.toDTOAll(entregadorRepository.findAll());
-		} catch (Exception ex) {
-			throw new NotFoundException("Erro ao pesquisar entregador - " + ex.getMessage());
-		}
-	}
+	        try {
+	            entregador = entregadorRepository.save(entregador);
+	        } catch (Exception ex) {
+	            throw new NotValidDataException("Erro ao alterar o entregador - " + ex.getMessage());
+	        }
 
-	public EntregadorDTO pesquisaPorNome(String parteNome) throws NotFoundException {
-		try {
-			return this.toDTO(entregadorRepository.findByNomeIgnoreCaseStartingWith(parteNome));
-		} catch (Exception ex) {
-			throw new NotFoundException("Erro ao pesquisar entregador pelo nome - " + ex.getMessage());
-		}
-	}
+	        return this.toDTO(entregador);
+	    }
 
-	public EntregadorDTO pesquisaCodigo(int codigo) throws NotFoundException {
-		try {
-			return this.toDTO(entregadorRepository.findById(codigo).get());
-		} catch (Exception ex) {
-			throw new NotFoundException("Erro ao pesquisar entregador pelo codigo - " + ex.getMessage());
-		}
-	}
+	    public void excluir(int codigo) throws NotValidDataException, NotFoundException {
+	        Entregador entregador = entregadorRepository.findById(codigo)
+	                .orElseThrow(() -> new NotFoundException("Não existe esse entregador"));
 
-	public List<EntregadorDTO> toDTOAll(List<Entregador> listaEntregador) {
-		List<EntregadorDTO> listaDTO = new ArrayList<EntregadorDTO>();
+	        try {
+	            entregadorRepository.delete(entregador);
+	        } catch (Exception ex) {
+	            throw new NotValidDataException("Erro ao excluir o entregador - " + ex.getMessage());
+	        }
+	    }
 
-		for (Entregador entregador : listaEntregador) {
-			listaDTO.add(this.toDTO(entregador));
-		}
-		return listaDTO;
-	}
+	    public List<EntregadorDTO> pesquisaTodos() throws NotFoundException {
+	        try {
+	            return this.toDTOAll(entregadorRepository.findAll());
+	        } catch (Exception ex) {
+	            throw new NotFoundException("Erro ao pesquisar entregadores - " + ex.getMessage());
+	        }
+	    }
 
-	public EntregadorDTO toDTO(Entregador entregador) {
-		return this.modelMapper.map(entregador, EntregadorDTO.class);
-	}
+	    public List<EntregadorDTO> pesquisaPorNome(String parteNome) throws NotFoundException {
+	        try {
+	            List<Entregador> lista = entregadorRepository.findByNomeIgnoreCaseStartingWith(parteNome);
+	            return toDTOAll(lista);
+	        } catch (Exception ex) {
+	            throw new NotFoundException("Erro ao pesquisar entregador pelo nome - " + ex.getMessage());
+	        }
+	    }
 
-	public Entregador toEntity(EntregadorDTO entregadorDTO) {
-		return this.modelMapper.map(entregadorDTO, Entregador.class);
-	}
+	    public EntregadorDTO pesquisaCodigo(int codigo) throws NotFoundException {
+	        Entregador entregador = entregadorRepository.findById(codigo)
+	                .orElseThrow(() -> new NotFoundException("Entregador não encontrado"));
+	        return this.toDTO(entregador);
+	    }
+
+	    public List<EntregadorDTO> toDTOAll(List<Entregador> listaEntregador) {
+	        List<EntregadorDTO> listaDTO = new ArrayList<>();
+	        for (Entregador entregador : listaEntregador) {
+	            listaDTO.add(this.toDTO(entregador));
+	        }
+	        return listaDTO;
+	    }
+
+	    public EntregadorDTO toDTO(Entregador entregador) {
+	        return this.modelMapper.map(entregador, EntregadorDTO.class);
+	    }
+
+	    public Entregador toEntity(EntregadorDTO entregadorDTO) {
+	        return this.modelMapper.map(entregadorDTO, Entregador.class);
+	    }
 }

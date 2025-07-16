@@ -9,12 +9,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ifmt.cba.restaurante.dto.ClienteDTO;
+import ifmt.cba.restaurante.dto.EntregadorDTO;
+import ifmt.cba.restaurante.dto.ItemPedidoDTO;
 import ifmt.cba.restaurante.dto.PedidoDTO;
+import ifmt.cba.restaurante.entity.Entregador;
+import ifmt.cba.restaurante.entity.ItemPedido;
 import ifmt.cba.restaurante.entity.Pedido;
+import ifmt.cba.restaurante.entity.PreparoProduto;
 import ifmt.cba.restaurante.entity.Enum.EstadoPedidoEnum;
 import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
 import ifmt.cba.restaurante.repository.PedidoRepository;
+import ifmt.cba.restaurante.repository.PreparoProdutoRepository;
 
 @Service
 public class PedidoNegocio {
@@ -23,20 +30,68 @@ public class PedidoNegocio {
 
     @Autowired
     private PedidoRepository pedidoRepository;
+    
+    @Autowired
+    private ClienteNegocio clienteNegocio;
+    
+    @Autowired
+    private EntregadorNegocio entregadorNegocio;
 
+    @Autowired
+    private PreparoProdutoRepository preparoProdutoRepository;
+    
     public PedidoNegocio() {
         this.modelMapper = new ModelMapper();
     }
 
-    public PedidoDTO inserir(PedidoDTO pedidoDTO) throws NotValidDataException {
+    public PedidoDTO inserir(PedidoDTO pedidoDTO) throws NotValidDataException, NotFoundException {
+        try {
+            ClienteDTO clienteDTO = clienteNegocio.pesquisaCodigo(pedidoDTO.getCliente().getCodigo());
+            pedidoDTO.setCliente(clienteDTO);
+        } catch (NotFoundException e) {
+            throw new NotFoundException("Cliente não encontrado");
+        }
+
+        try {
+            EntregadorDTO entregadorDTO = entregadorNegocio.pesquisaCodigo(pedidoDTO.getEntregador().getCodigo());
+            pedidoDTO.setEntregador(entregadorDTO);
+        } catch (Exception e) {
+            throw new NotFoundException("Entregador não encontrado");
+        }
+
+        if (pedidoDTO.getListaItens() == null || pedidoDTO.getListaItens().isEmpty()) {
+            throw new NotValidDataException("Pedido deve conter pelo menos um item");
+        }
 
         Pedido pedido = this.toEntity(pedidoDTO);
         pedido.setDataPedido(LocalDate.now());
         pedido.setHoraPedido(LocalTime.now());
         pedido.setEstado(EstadoPedidoEnum.REGISTRADO);
-        
-        String mensagemErros = pedido.validar();
 
+        List<ItemPedido> listaItensConvertidos = new ArrayList<>();
+
+        for (ItemPedidoDTO itemDTO : pedidoDTO.getListaItens()) {
+            if (itemDTO.getQuantidadePorcao() <= 0) {
+                throw new NotValidDataException("Quantidade de porções inválida.");
+            }
+
+            if (itemDTO.getPreparoProduto() == null || itemDTO.getPreparoProduto().getCodigo() <= 0) {
+                throw new NotValidDataException("Preparo do produto é obrigatório.");
+            }
+
+            PreparoProduto preparo = preparoProdutoRepository.findById(itemDTO.getPreparoProduto().getCodigo())
+                    .orElseThrow(() -> new NotValidDataException("Preparo de produto não encontrado."));
+
+            ItemPedido item = new ItemPedido();
+            item.setQuantidadePorcao(itemDTO.getQuantidadePorcao());
+            item.setPreparoProduto(preparo);
+
+            listaItensConvertidos.add(item);
+        }
+
+        pedido.setListaItens(listaItensConvertidos);
+
+        String mensagemErros = pedido.validar();
         if (!mensagemErros.isEmpty()) {
             throw new NotValidDataException(mensagemErros);
         }
@@ -46,26 +101,69 @@ public class PedidoNegocio {
         } catch (Exception ex) {
             throw new NotValidDataException("Erro ao incluir o pedido - " + ex.getMessage());
         }
+
         return this.toDTO(pedido);
     }
 
     public PedidoDTO alterar(PedidoDTO pedidoDTO) throws NotValidDataException, NotFoundException {
+        if (pedidoDTO.getListaItens() == null || pedidoDTO.getListaItens().isEmpty()) {
+            throw new NotValidDataException("Pedido deve conter pelo menos um item");
+        }
+
+        Pedido pedidoExistente = pedidoRepository.findById(pedidoDTO.getCodigo())
+            .orElseThrow(() -> new NotFoundException("Pedido não encontrado"));
+
+        // Atualiza cliente e entregador
+        try {
+            ClienteDTO clienteDTO = clienteNegocio.pesquisaCodigo(pedidoDTO.getCliente().getCodigo());
+            pedidoDTO.setCliente(clienteDTO);
+        } catch (NotFoundException e) {
+            throw new NotFoundException("Cliente não encontrado");
+        }
+
+        try {
+            EntregadorDTO entregadorDTO = entregadorNegocio.pesquisaCodigo(pedidoDTO.getEntregador().getCodigo());
+            pedidoDTO.setEntregador(entregadorDTO);
+        } catch (Exception e) {
+            throw new NotFoundException("Entregador não encontrado");
+        }
 
         Pedido pedido = this.toEntity(pedidoDTO);
+
+        // Atualiza a lista de itens com os dados corretos
+        List<ItemPedido> listaItensConvertidos = new ArrayList<>();
+        for (ItemPedidoDTO itemDTO : pedidoDTO.getListaItens()) {
+            if (itemDTO.getQuantidadePorcao() <= 0) {
+                throw new NotValidDataException("Quantidade de porções inválida.");
+            }
+
+            PreparoProduto preparo = preparoProdutoRepository.findById(itemDTO.getPreparoProduto().getCodigo())
+                    .orElseThrow(() -> new NotValidDataException("Preparo de produto não encontrado."));
+
+            ItemPedido item = new ItemPedido();
+            item.setCodigo(itemDTO.getCodigo());
+            item.setQuantidadePorcao(itemDTO.getQuantidadePorcao());
+            item.setPreparoProduto(preparo);
+
+            listaItensConvertidos.add(item);
+        }
+
+        pedido.setListaItens(listaItensConvertidos);
+
         String mensagemErros = pedido.validar();
         if (!mensagemErros.isEmpty()) {
             throw new NotValidDataException(mensagemErros);
         }
+
         try {
-            if (pedidoRepository.findById(pedido.getCodigo()).orElse(null) == null) {
-                throw new NotFoundException("Nao existe esse pedido");
-            }
             pedido = pedidoRepository.save(pedido);
         } catch (Exception ex) {
             throw new NotValidDataException("Erro ao alterar o pedido - " + ex.getMessage());
         }
+
         return this.toDTO(pedido);
     }
+
 
     public PedidoDTO iniciarProducao(int codigo) throws NotValidDataException, NotFoundException {
         try {
@@ -110,25 +208,27 @@ public class PedidoNegocio {
     }
 
     public PedidoDTO iniciarEntrega(int codigo, int codigoEntregador) throws NotValidDataException, NotFoundException {
+        Pedido pedido = pedidoRepository.findById(codigo)
+            .orElseThrow(() -> new NotFoundException("Nao existe esse pedido"));
+
+        if (pedido.getEstado() != EstadoPedidoEnum.PRONTO) {
+            throw new NotValidDataException("Pedido deve estar no estado PRONTO para iniciar entrega");
+        }
+
+        EntregadorDTO entregadorDTO = entregadorNegocio.pesquisaCodigo(codigoEntregador);
+        Entregador entregador = modelMapper.map(entregadorDTO, Entregador.class);
+
+        pedido.setHoraEntrega(LocalTime.now());
+        pedido.setEstado(EstadoPedidoEnum.ENTREGA);
+        pedido.setEntregador(entregador);
+
         try {
-            Pedido pedido = pedidoRepository.findById(codigo).orElse(null);
-            if (pedido == null) {
-                throw new NotFoundException("Nao existe esse pedido");
-            }
-            
-            if (pedido.getEstado() != EstadoPedidoEnum.PRONTO) {
-                throw new NotValidDataException("Pedido deve estar no estado PRONTO para iniciar entrega");
-            }
-            
-            pedido.setHoraEntrega(LocalTime.now());
-            pedido.setEstado(EstadoPedidoEnum.ENTREGA);
-            // Aqui deveria buscar o entregador pelo código e associar ao pedido
             pedido = pedidoRepository.save(pedido);
-            
-            return this.toDTO(pedido);
         } catch (Exception ex) {
             throw new NotValidDataException("Erro ao iniciar entrega do pedido - " + ex.getMessage());
         }
+
+        return this.toDTO(pedido);
     }
 
     public PedidoDTO finalizarEntrega(int codigo) throws NotValidDataException, NotFoundException {
