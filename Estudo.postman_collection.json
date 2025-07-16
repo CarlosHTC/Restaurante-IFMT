@@ -1,0 +1,1702 @@
+{
+	"info": {
+		"_postman_id": "a06cffac-8cee-46b0-a77b-a91c54758933",
+		"name": "Estudo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34145879"
+	},
+	"item": [
+		{
+			"name": "Bairro",
+			"item": [
+				{
+					"name": "listar bairros",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/bairro",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bairro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar bairro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Teste\",\r\n    \"custoEntrega\": 20.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bairro",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bairro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bairro/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bairro",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar bairro",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"custoEntrega\": 21.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bairro",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bairro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar bairro",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/bairro?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bairro"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Listar clientes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"custoEntrega\": 21.00\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"custoEntrega\": 21.00\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por nome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"custoEntrega\": 21.00\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente/nome?nome=teste",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente",
+								"nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "teste"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por cpf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"custoEntrega\": 21.00\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente/cpf?cpf=12345678910",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente",
+								"cpf"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "12345678910"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salva cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Carlos\",\r\n    \"rg\": \"273600813\",\r\n    \"cpf\": \"12345678910\",\r\n    \"telefone\": \"997405605\",\r\n    \"logradouro\": \"Rua das Palmeiras\",\r\n    \"numero\": \"4\",\r\n    \"bairro\": {\r\n        \"codigo\": 1\r\n    },\r\n    \"pontoReferencia\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar cliente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"rg\": \"273600813\",\r\n    \"cpf\": \"12345678910\",\r\n    \"telefone\": \"997405605\",\r\n    \"logradouro\": \"Rua das Palmeiras\",\r\n    \"numero\": \"16\",\r\n    \"bairro\": {\r\n        \"codigo\": 1\r\n    },\r\n    \"pontoReferencia\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Grupo Alimentar",
+			"item": [
+				{
+					"name": "Listar Grupo Alimentar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"Teste\",\r\n    \"rg\": \"273600813\",\r\n    \"cpf\": \"12345678910\",\r\n    \"telefone\": \"997405605\",\r\n    \"logradouro\": \"Rua das Palmeiras\",\r\n    \"numero\": \"13\",\r\n    \"bairro\": {\r\n        \"codigo\": 1,\r\n        \"nome\": \"Teste\",\r\n        \"custoEntrega\": 20.00\r\n    },\r\n    \"pontoReferencia\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/grupoAlimentar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"grupoAlimentar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/grupoAlimentar/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"grupoAlimentar",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/grupoAlimentar/nome?nome=teste",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"grupoAlimentar",
+								"nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "teste"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salva Grupo Alimentar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/grupoAlimentar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"grupoAlimentar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Grupo Alimentar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"testado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/grupoAlimentar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"grupoAlimentar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Grupo Alimentar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"testado\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/grupoAlimentar?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"grupoAlimentar"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Listar Pedidos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pedido",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/pedido/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar por Estado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/pedido/estado?estado=PRODUCAO",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"estado"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "PRODUCAO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar por Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pedido/data?data=20/05/2024",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"data"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "20/05/2024"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 0,\r\n  \"cliente\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"dataPedido\": \"2025-07-15\",\r\n  \"horaPedido\": \"15:30:00\",\r\n  \"horaProducao\": null,\r\n  \"horaPronto\": null,\r\n  \"horaEntrega\": null,\r\n  \"horaFinalizado\": null,\r\n  \"estado\": \"REGISTRADO\",\r\n  \"entregador\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"listaItens\": [\r\n    {\r\n      \"codigo\": 1,\r\n      \"preparoProduto\": {\r\n        \"codigo\": 1\r\n      },\r\n      \"quantidadePorcao\": 3\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pedido",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar Produção",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pedido/iniciarProducao?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"iniciarProducao"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Produção",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pedido/finalizarProducao?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"finalizarProducao"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar Entrega",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pedido/iniciarEntrega?codigo=1&entregador=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"iniciarEntrega"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								},
+								{
+									"key": "entregador",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Entrega",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pedido/finalizarEntrega?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"finalizarEntrega"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pedido/cancelar?codigo=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pedido",
+								"cancelar"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Listar Produtos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/produto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/produto/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Nome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/produto/nome?nome=teste",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto",
+								"nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "teste"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar estoque minimo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/produto/estoqueMinimo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto",
+								"estoqueMinimo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 0,\r\n  \"nome\": \"Farinha de Trigo\",\r\n  \"custoUnidade\": 2.5,\r\n  \"valorEnergetico\": 150,\r\n  \"estoque\": 100,\r\n  \"estoqueMinimo\": 20,\r\n  \"grupoAlimentar\": {\r\n    \"codigo\": 1\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/produto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 1,\r\n  \"nome\": \"Farinha de Trigo\",\r\n  \"custoUnidade\": 2.6,\r\n  \"valorEnergetico\": 150,\r\n  \"estoque\": 100,\r\n  \"estoqueMinimo\": 20,\r\n  \"grupoAlimentar\": {\r\n    \"codigo\": 1\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/produto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/produto?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"produto"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tipo Preparo",
+			"item": [
+				{
+					"name": "Listar Tipo Preparo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/tipoPpreparo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tipoPpreparo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/tipoPpreparo/codigo?codigo=8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tipoPpreparo",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Descrição",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/tipoPpreparo/descricao?descricao=frito",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tipoPpreparo",
+								"descricao"
+							],
+							"query": [
+								{
+									"key": "descricao",
+									"value": "frito"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Tipo Preparo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 0,\r\n  \"descricao\": \"Assado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tipoPpreparo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tipoPpreparo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Tipo Preparo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 1,\r\n  \"descricao\": \"Frito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tipoPpreparo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tipoPpreparo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Tipo Preparo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/tipoPpreparo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tipoPpreparo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registro Estoque",
+			"item": [
+				{
+					"name": "Listar Registro Estoque",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/registroEstoque",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registroEstoque"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/registroEstoque/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registroEstoque",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Movimento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/registroEstoque/movimento?movimento=COMPRA",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registroEstoque",
+								"movimento"
+							],
+							"query": [
+								{
+									"key": "movimento",
+									"value": "COMPRA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Periodo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/registroEstoque/periodo?dataInicio=10/10/2025&dataFim=10/10/2025",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registroEstoque",
+								"periodo"
+							],
+							"query": [
+								{
+									"key": "dataInicio",
+									"value": "10/10/2025"
+								},
+								{
+									"key": "dataFim",
+									"value": "10/10/2025"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Registro Estoque",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 0,\r\n  \"produto\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"movimento\": \"COMPRA\",\r\n  \"data\": \"2025-07-15\",\r\n  \"quantidade\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/registroEstoque",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registroEstoque"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Preparo Produto",
+			"item": [
+				{
+					"name": "Listar Preparo Produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/preparoProduto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"preparoProduto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/preparoProduto/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"preparoProduto",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/preparoProduto/nome?nome=teste",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"preparoProduto",
+								"nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "teste"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Preparo Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 0,\r\n  \"nome\": \"Bolo de Chocolate com Cobertura\",\r\n  \"produto\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"tipoPreparo\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"tempoPreparo\": 45,\r\n  \"valorPreparo\": 18.50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/preparoProduto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"preparoProduto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Preparo Produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 1,\r\n  \"nome\": \"Bolo de Cenoura com Cobertura\",\r\n  \"produto\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"tipoPreparo\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"tempoPreparo\": 45,\r\n  \"valorPreparo\": 18.50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/preparoProduto",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"preparoProduto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Preparo Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": 1,\r\n  \"nome\": \"Bolo de Cenoura com Cobertura\",\r\n  \"produto\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"tipoPreparo\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"tempoPreparo\": 45,\r\n  \"valorPreparo\": 18.50\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/preparoProduto?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"preparoProduto"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entregador",
+			"item": [
+				{
+					"name": "Listar Entregador",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/entregador",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"entregador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/entregador/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"entregador",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Nome",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/entregador/nome?nome=João",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"entregador",
+								"nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "João"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Entregador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"João da Barreto\",\r\n  \"cpf\": \"12345678911\",\r\n  \"rg\": \"273602813\",\r\n  \"telefone\": \"3499999999\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/entregador",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"entregador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Entregador",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"nome\": \"João da Barreto\",\r\n    \"cpf\": \"12345678911\",\r\n    \"rg\": \"273602813\",\r\n    \"telefone\": \"3499999999\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/entregador",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"entregador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Entregador",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/entregador?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"entregador"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item Pedido",
+			"item": [
+				{
+					"name": "Listar Item Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/itemPedido",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"itemPedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/itemPedido/codigo?codigo=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"itemPedido",
+								"codigo"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Item Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"preparoProduto\": {\r\n    \"codigo\": 1\r\n  },\r\n  \"quantidadePorcao\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/itemPedido",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"itemPedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Item Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 1,\r\n    \"preparoProduto\": {\r\n        \"codigo\": 1\r\n    },\r\n    \"quantidadePorcao\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/itemPedido",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"itemPedido"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http:/localhost:8080",
+			"type": "default"
+		}
+	]
+}
