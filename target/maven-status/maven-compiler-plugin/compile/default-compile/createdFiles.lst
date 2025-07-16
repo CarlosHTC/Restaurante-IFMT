@@ -43,7 +43,6 @@ ifmt\cba\restaurante\dto\RegistroEstoqueDTO.class
 ifmt\cba\restaurante\negocio\ClienteNegocio.class
 ifmt\cba\restaurante\repository\ClienteRepository.class
 ifmt\cba\restaurante\entity\Entregador.class
-ifmt\cba\restaurante\config\SwaggerConfig.class
 ifmt\cba\restaurante\negocio\BairroNegocio.class
 ifmt\cba\restaurante\entity\TipoPreparo.class
 ifmt\cba\restaurante\controller\PreparoProdutoController.class

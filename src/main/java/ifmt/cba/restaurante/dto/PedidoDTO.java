@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import ifmt.cba.restaurante.entity.Enum.EstadoPedidoEnum;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,11 +29,99 @@ public class PedidoDTO {
     private LocalTime horaPronto;
     private LocalTime horaEntrega;
     private LocalTime horaFinalizado;
-    private EstadoPedidoDTO estado;
+    private EstadoPedidoEnum estado;
     private EntregadorDTO entregador;
     private List<ItemPedidoDTO> listaItens;
+    
+    public int getCodigo() {
+		return codigo;
+	}
+    
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 
-    @Override
+	public ClienteDTO getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteDTO cliente) {
+		this.cliente = cliente;
+	}
+
+	public LocalDate getDataPedido() {
+		return dataPedido;
+	}
+
+	public void setDataPedido(LocalDate dataPedido) {
+		this.dataPedido = dataPedido;
+	}
+
+	public LocalTime getHoraPedido() {
+		return horaPedido;
+	}
+
+	public void setHoraPedido(LocalTime horaPedido) {
+		this.horaPedido = horaPedido;
+	}
+
+	public LocalTime getHoraProducao() {
+		return horaProducao;
+	}
+
+	public void setHoraProducao(LocalTime horaProducao) {
+		this.horaProducao = horaProducao;
+	}
+
+	public LocalTime getHoraPronto() {
+		return horaPronto;
+	}
+
+	public void setHoraPronto(LocalTime horaPronto) {
+		this.horaPronto = horaPronto;
+	}
+
+	public LocalTime getHoraEntrega() {
+		return horaEntrega;
+	}
+
+	public void setHoraEntrega(LocalTime horaEntrega) {
+		this.horaEntrega = horaEntrega;
+	}
+
+	public LocalTime getHoraFinalizado() {
+		return horaFinalizado;
+	}
+
+	public void setHoraFinalizado(LocalTime horaFinalizado) {
+		this.horaFinalizado = horaFinalizado;
+	}
+
+	public EstadoPedidoEnum getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoPedidoEnum estado) {
+		this.estado = estado;
+	}
+
+	public EntregadorDTO getEntregador() {
+		return entregador;
+	}
+
+	public void setEntregador(EntregadorDTO entregador) {
+		this.entregador = entregador;
+	}
+
+	public List<ItemPedidoDTO> getListaItens() {
+		return listaItens;
+	}
+
+	public void setListaItens(List<ItemPedidoDTO> listaItens) {
+		this.listaItens = listaItens;
+	}
+
+	@Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }

@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ifmt.cba.restaurante.dto.BairroDTO;
 import ifmt.cba.restaurante.dto.ClienteDTO;
 import ifmt.cba.restaurante.entity.Bairro;
 import ifmt.cba.restaurante.entity.Cliente;
@@ -25,34 +26,24 @@ public class ClienteNegocio {
     
     @Autowired
     private BairroRepository bairroRepository;
+    
+    @Autowired
+    private BairroNegocio bairroNegocio;
 
     public ClienteNegocio() {
         this.modelMapper = new ModelMapper();
     }
 
-    public ClienteDTO inserir(ClienteDTO clienteDTO) throws NotValidDataException {
+    public ClienteDTO inserir(ClienteDTO clienteDTO) throws NotValidDataException, NotFoundException {
+    	try {
+			BairroDTO bairroDTO = bairroNegocio.pesquisaCodigo(clienteDTO.getBairro().getCodigo());
+			clienteDTO.setBairro(bairroDTO);
+		} catch (NotFoundException e) {
+			throw new NotFoundException("Bairro não encontrado");
+		}
+    	
         Cliente cliente = this.toEntity(clienteDTO);
 
-        // Buscar o bairro pelo ID do DTO
-        Integer codigoBairro = clienteDTO.getBairro() != null ? clienteDTO.getBairro().getCodigo() : null;
-
-        if (codigoBairro == null) {
-            throw new NotValidDataException("Bairro não informado");
-        }
-
-        Bairro bairro = bairroRepository.findById(codigoBairro)
-            .orElseThrow(() -> new NotValidDataException("Bairro com código " + codigoBairro + " não encontrado"));
-
-        // Vincular o bairro ao cliente
-        cliente.setBairro(bairro);
-
-        // Validar cliente com bairro já atribuído
-        String mensagemErros = cliente.validar();
-        if (!mensagemErros.isEmpty()) {
-            throw new NotValidDataException(mensagemErros);
-        }
-
-        // Verificar CPF já existente
         if (clienteRepository.findByCpf(cliente.getCpf()) != null) {
             throw new NotValidDataException("Já existe cliente com esse CPF");
         }
@@ -67,7 +58,13 @@ public class ClienteNegocio {
     }
 
     public ClienteDTO alterar(ClienteDTO clienteDTO) throws NotValidDataException, NotFoundException {
-
+    	try {
+			BairroDTO bairroDTO = bairroNegocio.pesquisaCodigo(clienteDTO.getBairro().getCodigo());
+			clienteDTO.setBairro(bairroDTO);
+		} catch (NotFoundException e) {
+			throw new NotFoundException("Bairro não encontrado");
+		}
+    	
         Cliente cliente = this.toEntity(clienteDTO);
         String mensagemErros = cliente.validar();
         if (!mensagemErros.isEmpty()) {

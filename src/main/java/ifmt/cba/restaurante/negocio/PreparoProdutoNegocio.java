@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ifmt.cba.restaurante.dto.PreparoProdutoDTO;
+import ifmt.cba.restaurante.dto.ProdutoDTO;
+import ifmt.cba.restaurante.dto.TipoPreparoDTO;
 import ifmt.cba.restaurante.entity.PreparoProduto;
 import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
@@ -21,12 +23,31 @@ public class PreparoProdutoNegocio {
     @Autowired
     private PreparoProdutoRepository preparoProdutoRepository;
 
+    @Autowired
+    private ProdutoNegocio produtoNegocio;
+    
+    @Autowired
+    private TipoPreparoNegocio tipoPreparoNegocio;
+    
     public PreparoProdutoNegocio() {
         this.modelMapper = new ModelMapper();
     }
 
-    public PreparoProdutoDTO inserir(PreparoProdutoDTO preparoProdutoDTO) throws NotValidDataException {
-
+    public PreparoProdutoDTO inserir(PreparoProdutoDTO preparoProdutoDTO) throws NotValidDataException, NotFoundException {
+    	try {
+			ProdutoDTO produtoDTO = produtoNegocio.pesquisaCodigo(preparoProdutoDTO.getProduto().getCodigo());
+			preparoProdutoDTO.setProduto(produtoDTO);
+		} catch (NotFoundException e) {
+			throw new NotFoundException("Produto não encontrado");
+		}
+    	
+    	try {
+    		TipoPreparoDTO tipoPreparoDTO = tipoPreparoNegocio.pesquisaCodigo(preparoProdutoDTO.getTipoPreparo().getCodigo());
+    		preparoProdutoDTO.setTipoPreparo(tipoPreparoDTO);
+		} catch (Exception e) {
+			throw new NotFoundException("Tipo preparo não encontrado");
+		}
+    	
         PreparoProduto preparoProduto = this.toEntity(preparoProdutoDTO);
         String mensagemErros = preparoProduto.validar();
 

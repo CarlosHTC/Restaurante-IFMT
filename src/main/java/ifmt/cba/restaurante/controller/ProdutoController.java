@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,17 +32,17 @@ public class ProdutoController {
         return produtoNegocio.pesquisaTodos();
     }
 
-    @GetMapping(value = "/codigo/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProdutoDTO buscarPorID(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/codigo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProdutoDTO buscarPorID(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return produtoNegocio.pesquisaCodigo(codigo);
     }
 
-    @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProdutoDTO buscarPorNome(@PathVariable("nome") String nome) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/nome", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProdutoDTO buscarPorNome(@RequestParam("nome") String nome) throws NotFoundException, NotValidDataException {
         return produtoNegocio.pesquisaNome(nome);
     }
 
-    @GetMapping(value = "/estoque-minimo", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/estoqueMinimo", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProdutoDTO> buscarAbaixoEstoqueMinimo() throws NotFoundException, NotValidDataException {
         return produtoNegocio.pesquisaProdutosAbaixoEstoqueMinimo();
     }
@@ -56,8 +57,8 @@ public class ProdutoController {
         return produtoNegocio.alterar(produtoDTO);
     }
 
-    @DeleteMapping(value = "/{codigo}")
-    public ResponseEntity<?> excluir(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @DeleteMapping
+    public ResponseEntity<?> excluir(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         produtoNegocio.excluir(codigo);
         return ResponseEntity.noContent().build();
     }

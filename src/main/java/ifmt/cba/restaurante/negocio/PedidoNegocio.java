@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ifmt.cba.restaurante.dto.PedidoDTO;
-import ifmt.cba.restaurante.entity.EstadoPedido;
 import ifmt.cba.restaurante.entity.Pedido;
+import ifmt.cba.restaurante.entity.Enum.EstadoPedidoEnum;
 import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
 import ifmt.cba.restaurante.repository.PedidoRepository;
@@ -33,7 +33,7 @@ public class PedidoNegocio {
         Pedido pedido = this.toEntity(pedidoDTO);
         pedido.setDataPedido(LocalDate.now());
         pedido.setHoraPedido(LocalTime.now());
-        pedido.setEstado(EstadoPedido.REGISTRADO);
+        pedido.setEstado(EstadoPedidoEnum.REGISTRADO);
         
         String mensagemErros = pedido.validar();
 
@@ -74,12 +74,12 @@ public class PedidoNegocio {
                 throw new NotFoundException("Nao existe esse pedido");
             }
             
-            if (pedido.getEstado() != EstadoPedido.REGISTRADO) {
+            if (pedido.getEstado() != EstadoPedidoEnum.REGISTRADO) {
                 throw new NotValidDataException("Pedido deve estar no estado REGISTRADO para iniciar producao");
             }
             
             pedido.setHoraProducao(LocalTime.now());
-            pedido.setEstado(EstadoPedido.PRODUCAO);
+            pedido.setEstado(EstadoPedidoEnum.PRODUCAO);
             pedido = pedidoRepository.save(pedido);
             
             return this.toDTO(pedido);
@@ -95,12 +95,12 @@ public class PedidoNegocio {
                 throw new NotFoundException("Nao existe esse pedido");
             }
             
-            if (pedido.getEstado() != EstadoPedido.PRODUCAO) {
+            if (pedido.getEstado() != EstadoPedidoEnum.PRODUCAO) {
                 throw new NotValidDataException("Pedido deve estar no estado PRODUCAO para finalizar");
             }
             
             pedido.setHoraPronto(LocalTime.now());
-            pedido.setEstado(EstadoPedido.PRONTO);
+            pedido.setEstado(EstadoPedidoEnum.PRONTO);
             pedido = pedidoRepository.save(pedido);
             
             return this.toDTO(pedido);
@@ -116,12 +116,12 @@ public class PedidoNegocio {
                 throw new NotFoundException("Nao existe esse pedido");
             }
             
-            if (pedido.getEstado() != EstadoPedido.PRONTO) {
+            if (pedido.getEstado() != EstadoPedidoEnum.PRONTO) {
                 throw new NotValidDataException("Pedido deve estar no estado PRONTO para iniciar entrega");
             }
             
             pedido.setHoraEntrega(LocalTime.now());
-            pedido.setEstado(EstadoPedido.ENTREGA);
+            pedido.setEstado(EstadoPedidoEnum.ENTREGA);
             // Aqui deveria buscar o entregador pelo código e associar ao pedido
             pedido = pedidoRepository.save(pedido);
             
@@ -138,12 +138,12 @@ public class PedidoNegocio {
                 throw new NotFoundException("Nao existe esse pedido");
             }
             
-            if (pedido.getEstado() != EstadoPedido.ENTREGA) {
+            if (pedido.getEstado() != EstadoPedidoEnum.ENTREGA) {
                 throw new NotValidDataException("Pedido deve estar no estado ENTREGA para finalizar");
             }
             
             pedido.setHoraFinalizado(LocalTime.now());
-            pedido.setEstado(EstadoPedido.CONCLUIDO);
+            pedido.setEstado(EstadoPedidoEnum.CONCLUIDO);
             pedido = pedidoRepository.save(pedido);
             
             return this.toDTO(pedido);
@@ -159,11 +159,11 @@ public class PedidoNegocio {
                 throw new NotFoundException("Nao existe esse pedido");
             }
             
-            if (pedido.getEstado() != EstadoPedido.REGISTRADO) {
+            if (pedido.getEstado() != EstadoPedidoEnum.REGISTRADO) {
                 throw new NotValidDataException("Apenas pedidos no estado REGISTRADO podem ser cancelados");
             }
             
-            pedido.setEstado(EstadoPedido.CANCELADO);
+            pedido.setEstado(EstadoPedidoEnum.CANCELADO);
             pedido = pedidoRepository.save(pedido);
             
             return this.toDTO(pedido);
@@ -180,7 +180,7 @@ public class PedidoNegocio {
         }
     }
 
-    public List<PedidoDTO> pesquisaPorEstado(EstadoPedido estado) throws NotFoundException {
+    public List<PedidoDTO> pesquisaPorEstado(EstadoPedidoEnum estado) throws NotFoundException {
         try {
             return this.toDTOAll(pedidoRepository.findByEstadoOrderByDataPedidoAscHoraPedidoAsc(estado));
         } catch (Exception ex) {

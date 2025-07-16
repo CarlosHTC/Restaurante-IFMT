@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import ifmt.cba.restaurante.entity.MovimentoEstoque;
+import ifmt.cba.restaurante.entity.Enum.MovimentoEstoqueEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,7 +32,7 @@ public class RegistroEstoque {
     private Produto produto;
 
     @Enumerated(EnumType.STRING)
-    private MovimentoEstoque movimento;
+    private MovimentoEstoqueEnum movimento;
 
     @Temporal(TemporalType.DATE)
     private LocalDate data;
@@ -56,11 +56,11 @@ public class RegistroEstoque {
         this.produto = produto;
     }
 
-    public MovimentoEstoque getMovimento() {
+    public MovimentoEstoqueEnum getMovimento() {
         return movimento;
     }
 
-    public void setMovimento(MovimentoEstoque movimento) {
+    public void setMovimento(MovimentoEstoqueEnum movimento) {
         this.movimento = movimento;
     }
 

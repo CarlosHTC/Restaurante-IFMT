@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import ifmt.cba.restaurante.dto.PedidoDTO;
-import ifmt.cba.restaurante.entity.EstadoPedido;
+import ifmt.cba.restaurante.entity.Enum.EstadoPedidoEnum;
 import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
 import ifmt.cba.restaurante.negocio.PedidoNegocio;
@@ -40,13 +42,21 @@ public class PedidoController {
 
     @GetMapping(path = "/estado", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PedidoDTO> buscarPorEstado(@RequestParam("estado") String estado) throws NotFoundException, NotValidDataException {
-        EstadoPedido estadoPedido = EstadoPedido.valueOf(estado.toUpperCase());
+        EstadoPedidoEnum estadoPedido = EstadoPedidoEnum.valueOf(estado.toUpperCase());
         return pedidoNegocio.pesquisaPorEstado(estadoPedido);
     }
 
     @GetMapping(path = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PedidoDTO> buscarPorData(@RequestParam("data") String data) throws NotFoundException, NotValidDataException {
-        LocalDate localDate = LocalDate.parse(data);
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate;
+
+        try {
+            localDate = LocalDate.parse(data, formatter);
+        } catch (DateTimeParseException e) {
+            throw new NotValidDataException("Data inválida. Use o formato dd/MM/yyyy");
+        }
+        
         return pedidoNegocio.pesquisaPorData(localDate);
     }
 

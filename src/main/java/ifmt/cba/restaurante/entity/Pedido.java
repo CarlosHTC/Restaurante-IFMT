@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import ifmt.cba.restaurante.entity.EstadoPedido;
+import ifmt.cba.restaurante.entity.Enum.EstadoPedidoEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,7 +61,7 @@ public class Pedido {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
-    private EstadoPedido estado;
+    private EstadoPedidoEnum estado;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "entregador")
@@ -151,11 +151,11 @@ public class Pedido {
         this.entregador = entregador;
     }
 
-    public EstadoPedido getEstado() {
+    public EstadoPedidoEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoPedido estado) {
+    public void setEstado(EstadoPedidoEnum estado) {
         this.estado = estado;
     }
 
@@ -198,7 +198,7 @@ public class Pedido {
         if (this.estado == null) {
             retorno += "Estado do pedido invalido";
         } else {
-            if ((this.estado == EstadoPedido.ENTREGA || this.estado == EstadoPedido.CONCLUIDO)
+            if ((this.estado == EstadoPedidoEnum.ENTREGA || this.estado == EstadoPedidoEnum.CONCLUIDO)
                     && this.entregador == null) {
                 retorno += "Quando o pedido estiver nos estados de ENTREGA OU CONCLUIDO, deve existir um entregador associado";
             }

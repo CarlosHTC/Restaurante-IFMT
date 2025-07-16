@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import ifmt.cba.restaurante.exception.NotValidDataException;
 import ifmt.cba.restaurante.negocio.PreparoProdutoNegocio;
 
 @RestController()
-@RequestMapping("/preparo-produto")
+@RequestMapping("/preparoProduto")
 public class PreparoProdutoController {
 
     @Autowired
@@ -31,13 +32,13 @@ public class PreparoProdutoController {
         return preparoProdutoNegocio.pesquisaTodos();
     }
 
-    @GetMapping(value = "/codigo/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PreparoProdutoDTO buscarPorID(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/codigo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PreparoProdutoDTO buscarPorID(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         return preparoProdutoNegocio.pesquisaCodigo(codigo);
     }
 
-    @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PreparoProdutoDTO buscarPorNome(@PathVariable("nome") String nome) throws NotFoundException, NotValidDataException {
+    @GetMapping(path = "/nome", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PreparoProdutoDTO buscarPorNome(@RequestParam("nome") String nome) throws NotFoundException, NotValidDataException {
         return preparoProdutoNegocio.pesquisaNome(nome);
     }
 
@@ -51,8 +52,8 @@ public class PreparoProdutoController {
         return preparoProdutoNegocio.alterar(preparoProdutoDTO);
     }
 
-    @DeleteMapping(value = "/{codigo}")
-    public ResponseEntity<?> excluir(@PathVariable("codigo") int codigo) throws NotFoundException, NotValidDataException {
+    @DeleteMapping
+    public ResponseEntity<?> excluir(@RequestParam("codigo") int codigo) throws NotFoundException, NotValidDataException {
         preparoProdutoNegocio.excluir(codigo);
         return ResponseEntity.noContent().build();
     }

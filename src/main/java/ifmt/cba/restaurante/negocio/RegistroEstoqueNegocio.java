@@ -8,9 +8,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ifmt.cba.restaurante.dto.ProdutoDTO;
 import ifmt.cba.restaurante.dto.RegistroEstoqueDTO;
-import ifmt.cba.restaurante.entity.MovimentoEstoque;
 import ifmt.cba.restaurante.entity.RegistroEstoque;
+import ifmt.cba.restaurante.entity.Enum.MovimentoEstoqueEnum;
 import ifmt.cba.restaurante.exception.NotFoundException;
 import ifmt.cba.restaurante.exception.NotValidDataException;
 import ifmt.cba.restaurante.repository.RegistroEstoqueRepository;
@@ -22,13 +23,21 @@ public class RegistroEstoqueNegocio {
 
     @Autowired
     private RegistroEstoqueRepository registroEstoqueRepository;
+    
+    @Autowired
+    private ProdutoNegocio produtoNegocio;
 
     public RegistroEstoqueNegocio() {
         this.modelMapper = new ModelMapper();
     }
 
-    public RegistroEstoqueDTO inserir(RegistroEstoqueDTO registroEstoqueDTO) throws NotValidDataException {
-
+    public RegistroEstoqueDTO inserir(RegistroEstoqueDTO registroEstoqueDTO) throws NotValidDataException, NotFoundException {
+    	try {
+			ProdutoDTO produtoDTO = produtoNegocio.pesquisaCodigo(registroEstoqueDTO.getProduto().getCodigo());
+			registroEstoqueDTO.setProduto(produtoDTO);
+		} catch (NotFoundException e) {
+			throw new NotFoundException("Produto não encontrado");
+		}
         RegistroEstoque registroEstoque = this.toEntity(registroEstoqueDTO);
         registroEstoque.setData(LocalDate.now());
         
@@ -54,7 +63,7 @@ public class RegistroEstoqueNegocio {
         }
     }
 
-    public List<RegistroEstoqueDTO> pesquisaPorMovimento(MovimentoEstoque movimento) throws NotFoundException {
+    public List<RegistroEstoqueDTO> pesquisaPorMovimento(MovimentoEstoqueEnum movimento) throws NotFoundException {
         try {
             return this.toDTOAll(registroEstoqueRepository.findByMovimento(movimento));
         } catch (Exception ex) {

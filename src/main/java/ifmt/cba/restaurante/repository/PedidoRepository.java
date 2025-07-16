@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ifmt.cba.restaurante.entity.EstadoPedido;
 import ifmt.cba.restaurante.entity.Pedido;
+import ifmt.cba.restaurante.entity.Enum.EstadoPedidoEnum;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
-    List<Pedido> findByEstadoOrderByDataPedidoAscHoraPedidoAsc(EstadoPedido estado);
+    List<Pedido> findByEstadoOrderByDataPedidoAscHoraPedidoAsc(EstadoPedidoEnum estado);
 
     List<Pedido> findByDataPedido(LocalDate data);
 
